@@ -7,6 +7,7 @@
 #include "pitcher.hpp"
 #include "plate.hpp"
 #include "cannon.hpp"
+#include "rocket.hpp"
 
 namespace iron_dome_game
 {
@@ -20,6 +21,7 @@ struct Game
     Grid grid;
 
     void spawnPlate();
+    void shootRocket();
 
     bool isShotFired = false;
     bool gameIsActive = false;

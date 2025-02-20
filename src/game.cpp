@@ -45,6 +45,7 @@ void Game::play()
     {
         if (isShotFired)
         {
+            shootRocket();
             isShotFired = false;
             ++shotsFired;
         }
@@ -92,4 +93,15 @@ void Game::spawnPlate()
     grid.addEntity(std::make_shared<Plate>(velocity));
 }
 
+void Game::shootRocket() 
+{
+    constexpr int ANGLE = 60;
+
+    int firePower = std::rand() % 15 + 30;
+    Velocity velocity;
+    velocity.x = 0 - std::cos(DEG_TO_RAD(ANGLE)) * firePower;
+    velocity.y = 0 - std::sin(DEG_TO_RAD(ANGLE)) * firePower;
+
+    grid.addEntity(std::make_shared<Rocket>(velocity));
+}
 }

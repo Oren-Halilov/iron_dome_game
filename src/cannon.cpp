@@ -5,6 +5,7 @@ namespace iron_dome_game
 {
 Cannon::Cannon()
 {
+    //TODO: make more interesting
     trajectory.initialState.pos.x = GRID_COLUMNS - 7;
     trajectory.initialState.pos.y = GRID_ROWS - 1;
 
