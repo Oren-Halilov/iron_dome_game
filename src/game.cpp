@@ -13,6 +13,7 @@ namespace iron_dome_game
 Game::Game() 
 {
     grid.addEntity(std::make_shared<iron_dome_game::Pitcher>());
+    grid.addEntity(std::make_shared<iron_dome_game::Cannon>());
 }
 
 //============================================================================//
@@ -23,7 +24,7 @@ void Game::keyboardListener()
     {
         // Block until a newline is entered
         char c = getchar();
-        // std::cout << "Fired" << std::endl;
+        std::cout << "Fired" << std::endl;
         isShotFired = true;
     }
 }
@@ -34,7 +35,7 @@ void Game::play()
 {
     gameIsActive = true;
 
-    // std::cout << "PLAYING" << std::endl;
+    std::cout << "PLAYING" << std::endl;
     std::chrono::steady_clock::time_point t0 = std::chrono::steady_clock::now();
     std::thread keyboardThread(&Game::keyboardListener, this);
 
