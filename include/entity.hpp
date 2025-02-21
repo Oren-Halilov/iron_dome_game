@@ -21,7 +21,6 @@ struct Entity
     
     Pos pos();
     EntityType entityType;
-    void setType(EntityType type) { entityType = type; }
     EntityType type() const { return entityType; }
 
     uint16_t width = 0;

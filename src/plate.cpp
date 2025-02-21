@@ -11,6 +11,7 @@ Plate::Plate(Velocity velocity)
 
     width   = 3;
     height  = 3;
+    entityType = EntityType::PLATE;
 }
 
 }

@@ -6,9 +6,9 @@ namespace iron_dome_game
 {
 struct IMoveableEntity : public Entity
 {
-    bool explode = false;
-    bool isExplode() {return explode;};
-    void intersected() {explode = true;}
+    bool exploded = false;
+    const bool getExploded() {return exploded;};
+    void setExploded() {exploded = true;}
     virtual void drawOnGrid(Grid &grid) override;
 
     bool isStatic() { return false; }

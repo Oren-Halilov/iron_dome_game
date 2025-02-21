@@ -46,7 +46,7 @@ void Grid::refresh()
 
     for (auto entity = m_movableEntities.begin(); entity != m_movableEntities.end(); )
     {
-        if (entity->get()->isExplode())
+        if (entity->get()->pos().y < 0 || entity->get()->pos().x < 0)
         {
             entity = m_movableEntities.erase(entity);
         }
@@ -92,11 +92,12 @@ uint16_t Grid::checkHits()
     {
         for (auto second = std::next(first); second != m_movableEntities.end(); ++second)
         {
-            if ((first->get()->type() == EntityType::ROCKET && second->get()->type() == EntityType::PLATE) ||
-                (first->get()->type() == EntityType::PLATE && second->get()->type() == EntityType::ROCKET))
+            if (first->get()->type() != second->get()->type())
             {
-                if (!first->get()->isExplode() && !second->get()->isExplode() && intersects(*first, *second))
+                if (!first->get()->getExploded() && !second->get()->getExploded() && intersects(*first, *second))
                 {
+                    second = m_movableEntities.erase(second);
+                    first = m_movableEntities.erase(first);
                     ++hits;
                 }
             }
@@ -114,8 +115,8 @@ bool Grid::intersects(std::shared_ptr<IMoveableEntity> first, std::shared_ptr<IM
     if (box1.p1.x < box2.p2.x && box1.p2.x > box2.p1.x &&
         box1.p1.y < box2.p2.y && box1.p2.y > box2.p1.y)
     {
-        first->intersected();
-        second->intersected();
+        first->setExploded();
+        second->setExploded();
         return true;
     }
     return false;    
