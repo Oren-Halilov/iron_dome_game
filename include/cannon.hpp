@@ -1,19 +1,13 @@
 #pragma once
 
-#include "entity.hpp"
+#include "immoveableEntity.hpp"
 
 namespace iron_dome_game
 {
-struct Cannon : public Entity
+struct Cannon : public IImmoveableEntity
 {
     Cannon();
     ~Cannon() = default;
-
-    EntityType type() override { return EntityType::CANNON; }
-
-    void drawOnGrid(Grid &grid) override;
-
-    bool isStatic() { return true; }
 };
 
 }

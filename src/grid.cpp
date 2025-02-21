@@ -1,6 +1,7 @@
 #include <iostream>
 #include "grid.hpp"
-#include "entity.hpp"
+#include "moveableEntity.hpp"
+#include "immoveableEntity.hpp"
 
 namespace iron_dome_game
 {
@@ -37,12 +38,17 @@ void Grid::refresh()
         },
         1
     );
-
-    for (auto entity = m_entities.begin(); entity != m_entities.end(); )
+    for (auto entity = m_immovableEntities.begin(); entity != m_immovableEntities.end(); )
     {
-        if (entity->get()->explode)
+        entity->get()->drawOnGrid(*this);
+        ++entity;
+    }
+
+    for (auto entity = m_movableEntities.begin(); entity != m_movableEntities.end(); )
+    {
+        if (entity->get()->isExplode())
         {
-            entity = m_entities.erase(entity);
+            entity = m_movableEntities.erase(entity);
         }
         else
         {
@@ -82,14 +88,14 @@ void Grid::forEveryPixel(std::function<void(int row, int col)> function, const i
 uint16_t Grid::checkHits() 
 {
     uint16_t hits = 0;
-    for (auto first = m_entities.begin(); first != m_entities.end(); ++first)
+    for (auto first = m_movableEntities.begin(); first != m_movableEntities.end(); ++first)
     {
-        for (auto second = std::next(first); second != m_entities.end(); ++second)
+        for (auto second = std::next(first); second != m_movableEntities.end(); ++second)
         {
             if ((first->get()->type() == EntityType::ROCKET && second->get()->type() == EntityType::PLATE) ||
                 (first->get()->type() == EntityType::PLATE && second->get()->type() == EntityType::ROCKET))
             {
-                if (!first->get()->explode && !second->get()->explode && intersects(*first, *second))
+                if (!first->get()->isExplode() && !second->get()->isExplode() && intersects(*first, *second))
                 {
                     ++hits;
                 }
@@ -101,7 +107,7 @@ uint16_t Grid::checkHits()
 
 //============================================================================//
 
-bool Grid::intersects(std::shared_ptr<Entity> first, std::shared_ptr<Entity> second) 
+bool Grid::intersects(std::shared_ptr<IMoveableEntity> first, std::shared_ptr<IMoveableEntity> second) 
 {
     BoundingBox box1 = first->boundingBox();
     BoundingBox box2 = second->boundingBox();

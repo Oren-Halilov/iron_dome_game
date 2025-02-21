@@ -18,19 +18,16 @@ enum EntityType
 struct Entity
 {
     Trajectory trajectory;
-
-    virtual EntityType type() { return EntityType::NONE; }
-
+    
     Pos pos();
+    EntityType entityType;
+    void setType(EntityType type) { entityType = type; }
+    EntityType type() const { return entityType; }
 
     uint16_t width = 0;
     uint16_t height = 0;
 
     BoundingBox boundingBox();
-
-    bool explode = false;
-    virtual void intersected() {};
-
     virtual bool isStatic() = 0;
     
     virtual void drawOnGrid(Grid &grid) = 0;

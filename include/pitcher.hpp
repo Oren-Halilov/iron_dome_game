@@ -1,19 +1,13 @@
 #pragma once
 
-#include "entity.hpp"
+#include "immoveableEntity.hpp"
 
 namespace iron_dome_game
 {
-struct Pitcher : public Entity
+struct Pitcher : public IImmoveableEntity
 {
     Pitcher();
     ~Pitcher() = default;
-
-    EntityType type() override { return EntityType::PITCHER; }
-
-    void drawOnGrid(Grid &grid) override;
-
-    bool isStatic() { return true; }
 };
 
 }
