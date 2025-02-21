@@ -28,6 +28,9 @@ struct Entity
 
     BoundingBox boundingBox();
 
+    bool explode = false;
+    virtual void intersected() {};
+
     virtual bool isStatic() = 0;
     
     virtual void drawOnGrid(Grid &grid) = 0;
