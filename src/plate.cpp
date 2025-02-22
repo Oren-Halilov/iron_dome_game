@@ -11,9 +11,8 @@ Plate::Plate(Velocity velocity)
 
     width   = 3;
     height  = 3;
+    entityType = EntityType::PLATE;
 }
-
-//============================================================================//
 
 void Plate::drawOnGrid(Grid &grid)
 {
@@ -25,7 +24,7 @@ void Plate::drawOnGrid(Grid &grid)
     grid.drawPixel(row, col+2, '/');
 
     grid.drawPixel(row+1, col  , '|');
-    grid.drawPixel(row+1, col+1, ' ');
+    grid.drawPixel(row+1, col+1, '*');
     grid.drawPixel(row+1, col+2, '|');
 
     grid.drawPixel(row+2, col  , '/');

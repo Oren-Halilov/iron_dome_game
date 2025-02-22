@@ -34,9 +34,18 @@ struct Trajectory
     Pos calculatePosition(std::chrono::steady_clock::time_point = std::chrono::steady_clock::now())
     {
         Pos pos;
-        pos.x = round(initialState.pos.x + initialState.velocity.x * duration().count());
-        pos.y = round(initialState.pos.y + initialState.velocity.y * duration().count() + 0.5 * GRAVITY * pow(duration().count(), 2));
-
+        int x = round(initialState.pos.x + initialState.velocity.x * duration().count());
+        int y = round(initialState.pos.y + initialState.velocity.y * duration().count() + 0.5 * GRAVITY * pow(duration().count(), 2));
+        if (x < 0 || x >= GRID_COLUMNS || y < 0 || y >= GRID_ROWS)
+        {
+            pos.x = GRID_COLUMNS;
+            pos.y = GRID_ROWS;
+        }
+        else
+        {
+            pos.x = x;
+            pos.y = y;
+        }
         return pos;
     }
 };

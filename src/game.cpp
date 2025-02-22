@@ -13,6 +13,7 @@ namespace iron_dome_game
 Game::Game() 
 {
     grid.addEntity(std::make_shared<iron_dome_game::Pitcher>());
+    grid.addEntity(std::make_shared<iron_dome_game::Cannon>());
 }
 
 //============================================================================//
@@ -34,7 +35,7 @@ void Game::play()
 {
     gameIsActive = true;
 
-    // std::cout << "PLAYING" << std::endl;
+    std::cout << "PLAYING" << std::endl;
     std::chrono::steady_clock::time_point t0 = std::chrono::steady_clock::now();
     std::thread keyboardThread(&Game::keyboardListener, this);
 
@@ -44,6 +45,7 @@ void Game::play()
     {
         if (isShotFired)
         {
+            shootRocket();
             isShotFired = false;
             ++shotsFired;
         }
@@ -91,4 +93,15 @@ void Game::spawnPlate()
     grid.addEntity(std::make_shared<Plate>(velocity));
 }
 
+void Game::shootRocket() 
+{
+    constexpr int ANGLE = 240;
+
+    int firePower = std::rand() % 15 + 30;
+    Velocity velocity;
+    velocity.x = 0 - std::cos(DEG_TO_RAD(ANGLE)) * firePower;
+    velocity.y = 0 - std::sin(DEG_TO_RAD(ANGLE)) * firePower;
+
+    grid.addEntity(std::make_shared<Rocket>(velocity));
+}
 }

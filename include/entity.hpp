@@ -15,21 +15,20 @@ enum EntityType
     ROCKET
 };
 
-struct Entity
+class Entity
 {
-    Trajectory trajectory;
-
-    virtual EntityType type() { return EntityType::NONE; }
-
-    Pos pos();
-
+protected:
+    EntityType entityType;
     uint16_t width = 0;
     uint16_t height = 0;
-
-    BoundingBox boundingBox();
-
-    virtual bool isStatic() = 0;
     
+    Trajectory trajectory;
+    
+public:
+    Pos pos();
+    EntityType type() const { return entityType; }
+    BoundingBox boundingBox();
+    virtual bool isStatic() const = 0;
     virtual void drawOnGrid(Grid &grid) = 0;
 };
 }

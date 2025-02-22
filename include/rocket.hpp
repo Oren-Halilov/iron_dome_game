@@ -4,11 +4,11 @@
 
 namespace iron_dome_game
 {
-class Plate : public MoveableEntity
+class Rocket : public MoveableEntity
 {
 public:
-    Plate(Velocity velocity);
-    ~Plate() = default;
+    Rocket(Velocity velocity);
+    ~Rocket() = default;
     void drawOnGrid(Grid &grid) override;
 };
 

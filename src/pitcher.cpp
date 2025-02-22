@@ -8,11 +8,10 @@ Pitcher::Pitcher()
     trajectory.initialState.pos.x = GRID_COLUMNS - 7;
     trajectory.initialState.pos.y = 0;
 
-    width    = 6;
-    height   = 5;
+    width = 6;
+    height = 5;
+    entityType = EntityType::PITCHER;
 }
-
-//============================================================================//
 
 void Pitcher::drawOnGrid(Grid &grid)
 {
@@ -49,5 +48,4 @@ void Pitcher::drawOnGrid(Grid &grid)
     grid.drawPixel(row+4, col+3, ' ');
     grid.drawPixel(row+4, col+4, ' ');
 }
-
 }

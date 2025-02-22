@@ -10,7 +10,7 @@
 namespace iron_dome_game
 {
 
-struct Entity;
+class Entity;
 
 // Two points, representing a rectangle around an entity
 struct BoundingBox
