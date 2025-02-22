@@ -1,10 +1,10 @@
 #pragma once
 
-#include "moveableEntity.hpp"
+#include "nonStaticEntity.hpp"
 
 namespace iron_dome_game
 {
-class Rocket : public MoveableEntity
+class Rocket : public NonStaticEntity
 {
 public:
     Rocket(Velocity velocity);

@@ -4,10 +4,10 @@
 
 namespace iron_dome_game
 {
-class ImmoveableEntity : public Entity
+class staticEntity : public Entity
 {
 public:
-    virtual ~ImmoveableEntity() = default;
+    virtual ~staticEntity() = default;
     bool isStatic() const { return true; }
 };
 

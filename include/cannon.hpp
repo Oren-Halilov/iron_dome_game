@@ -1,10 +1,10 @@
 #pragma once
 
-#include "immoveableEntity.hpp"
+#include "staticEntity.hpp"
 
 namespace iron_dome_game
 {
-class Cannon : public ImmoveableEntity
+class Cannon : public staticEntity
 {
 public:
     Cannon();
