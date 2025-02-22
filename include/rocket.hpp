@@ -4,10 +4,12 @@
 
 namespace iron_dome_game
 {
-struct Rocket : public IMoveableEntity
+class Rocket : public MoveableEntity
 {
+public:
     Rocket(Velocity velocity);
     ~Rocket() = default;
+    void drawOnGrid(Grid &grid) override;
 };
 
 }

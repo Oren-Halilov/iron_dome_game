@@ -4,10 +4,12 @@
 
 namespace iron_dome_game
 {
-struct IImmoveableEntity : public Entity
+class ImmoveableEntity : public Entity
 {
-    virtual void drawOnGrid(Grid &grid) override;
-    bool isStatic() { return true; }
+public:
+    virtual ~ImmoveableEntity() = default;
+    bool isStatic() const { return true; }
 };
 
 }
+

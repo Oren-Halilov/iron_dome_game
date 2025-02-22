@@ -1,7 +1,7 @@
 #include <iostream>
 #include "grid.hpp"
-#include "moveableEntity.hpp"
-#include "immoveableEntity.hpp"
+
+#include "entity.hpp"
 
 namespace iron_dome_game
 {
@@ -38,17 +38,12 @@ void Grid::refresh()
         },
         1
     );
-    for (auto entity = m_immovableEntities.begin(); entity != m_immovableEntities.end(); )
-    {
-        entity->get()->drawOnGrid(*this);
-        ++entity;
-    }
 
-    for (auto entity = m_movableEntities.begin(); entity != m_movableEntities.end(); )
+    for (auto entity = m_entities.begin(); entity != m_entities.end(); )
     {
-        if (entity->get()->pos().y < 0 || entity->get()->pos().x < 0)
+        if (entity->get()->pos().y == GRID_ROWS && entity->get()->pos().x == GRID_COLUMNS)
         {
-            entity = m_movableEntities.erase(entity);
+            entity = m_entities.erase(entity);
         }
         else
         {
@@ -62,7 +57,7 @@ void Grid::refresh()
 
 bool Grid::drawPixel(uint16_t row, uint16_t col, char pixel) 
 {
-    if (row >= 0 && row < rows() && col >= 0 && col < columns() && pixel != ' ')
+    if (row < rows() && col < columns() && pixel != ' ')
     {
         m_grid[row][col] = pixel;
         return true;
@@ -88,16 +83,16 @@ void Grid::forEveryPixel(std::function<void(int row, int col)> function, const i
 uint16_t Grid::checkHits() 
 {
     uint16_t hits = 0;
-    for (auto first = m_movableEntities.begin(); first != m_movableEntities.end(); ++first)
+    for (auto first = m_entities.begin(); first != m_entities.end(); ++first)
     {
-        for (auto second = std::next(first); second != m_movableEntities.end(); ++second)
+        for (auto second = std::next(first); second != m_entities.end(); ++second)
         {
-            if (first->get()->type() != second->get()->type())
+            if (!first->get()->isStatic()&& !second->get()->isStatic() && first->get()->type() != second->get()->type())
             {
-                if (!first->get()->getExploded() && !second->get()->getExploded() && intersects(*first, *second))
+                if (intersects(*first, *second))
                 {
-                    second = m_movableEntities.erase(second);
-                    first = m_movableEntities.erase(first);
+                    second = m_entities.erase(second);
+                    first = m_entities.erase(first);
                     ++hits;
                 }
             }
@@ -108,18 +103,12 @@ uint16_t Grid::checkHits()
 
 //============================================================================//
 
-bool Grid::intersects(std::shared_ptr<IMoveableEntity> first, std::shared_ptr<IMoveableEntity> second) 
+bool Grid::intersects(std::shared_ptr<Entity> first, std::shared_ptr<Entity> second) 
 {
     BoundingBox box1 = first->boundingBox();
     BoundingBox box2 = second->boundingBox();
-    if (box1.p1.x < box2.p2.x && box1.p2.x > box2.p1.x &&
-        box1.p1.y < box2.p2.y && box1.p2.y > box2.p1.y)
-    {
-        first->setExploded();
-        second->setExploded();
-        return true;
-    }
-    return false;    
+    return (box1.p1.x < box2.p2.x && box1.p2.x > box2.p1.x &&
+        box1.p1.y < box2.p2.y && box1.p2.y > box2.p1.y);
 }
 
 }

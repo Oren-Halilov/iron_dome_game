@@ -4,10 +4,12 @@
 
 namespace iron_dome_game
 {
-struct Cannon : public IImmoveableEntity
+class Cannon : public ImmoveableEntity
 {
+public:
     Cannon();
     ~Cannon() = default;
+    void drawOnGrid(Grid &grid) override;
 };
 
 }

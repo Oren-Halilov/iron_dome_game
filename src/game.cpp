@@ -12,8 +12,8 @@ namespace iron_dome_game
 
 Game::Game() 
 {
-    grid.addImmovableEntity(std::make_shared<iron_dome_game::Pitcher>());
-    grid.addImmovableEntity(std::make_shared<iron_dome_game::Cannon>());
+    grid.addEntity(std::make_shared<iron_dome_game::Pitcher>());
+    grid.addEntity(std::make_shared<iron_dome_game::Cannon>());
 }
 
 //============================================================================//
@@ -24,7 +24,7 @@ void Game::keyboardListener()
     {
         // Block until a newline is entered
         char c = getchar();
-        std::cout << "Fired" << std::endl;
+        // std::cout << "Fired" << std::endl;
         isShotFired = true;
     }
 }
@@ -90,7 +90,7 @@ void Game::spawnPlate()
     Velocity velocity;
     velocity.x = std::cos(DEG_TO_RAD(ANGLE)) * firePower;
     velocity.y = std::sin(DEG_TO_RAD(ANGLE)) * firePower;
-    grid.addMovableEntity(std::make_shared<Plate>(velocity));
+    grid.addEntity(std::make_shared<Plate>(velocity));
 }
 
 void Game::shootRocket() 
@@ -102,6 +102,6 @@ void Game::shootRocket()
     velocity.x = 0 - std::cos(DEG_TO_RAD(ANGLE)) * firePower;
     velocity.y = 0 - std::sin(DEG_TO_RAD(ANGLE)) * firePower;
 
-    grid.addMovableEntity(std::make_shared<Rocket>(velocity));
+    grid.addEntity(std::make_shared<Rocket>(velocity));
 }
 }

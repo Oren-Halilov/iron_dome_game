@@ -10,8 +10,7 @@
 namespace iron_dome_game
 {
 
-struct IMoveableEntity;
-struct IImmoveableEntity;
+class Entity;
 
 // Two points, representing a rectangle around an entity
 struct BoundingBox
@@ -34,19 +33,17 @@ public:
 
     bool drawPixel(uint16_t row, uint16_t col, char pixel);
 
-    void addMovableEntity(std::shared_ptr<IMoveableEntity> entity) { m_movableEntities.push_back(entity); }
-    void addImmovableEntity(std::shared_ptr<IImmoveableEntity> entity) { m_immovableEntities.push_back(entity); }
+    void addEntity(std::shared_ptr<Entity> entity) { m_entities.push_back(entity); }
 
     uint16_t checkHits();
 
 private:
     void forEveryPixel(std::function<void(int row, int col)> function, const int rowCount = GRID_ROWS, const int columnCount = GRID_COLUMNS);
 
-    static bool intersects(std::shared_ptr<IMoveableEntity> first, std::shared_ptr<IMoveableEntity> second);
+    static bool intersects(std::shared_ptr<Entity> first, std::shared_ptr<Entity> second);
 
     char m_grid[GRID_ROWS][GRID_COLUMNS];
 
-    std::list<std::shared_ptr<IMoveableEntity>> m_movableEntities;
-    std::list<std::shared_ptr<IImmoveableEntity>> m_immovableEntities;
+    std::list<std::shared_ptr<Entity>> m_entities;
 };
 }

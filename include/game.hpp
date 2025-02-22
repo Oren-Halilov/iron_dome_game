@@ -11,12 +11,8 @@
 
 namespace iron_dome_game
 {
-struct Game
+class Game
 {
-    Game();
-    ~Game() = default;
-
-    void play();
     void keyboardListener();
     Grid grid;
 
@@ -32,6 +28,11 @@ struct Game
     uint16_t platesFired = 0;
     uint16_t platesHit   = 0;
     uint16_t shotsFired  = 0;
+public:
+    Game();
+    ~Game() = default;
+
+    void play();
 };
 
 }

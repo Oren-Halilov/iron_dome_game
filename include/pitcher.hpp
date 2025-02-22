@@ -4,10 +4,12 @@
 
 namespace iron_dome_game
 {
-struct Pitcher : public IImmoveableEntity
+class Pitcher : public ImmoveableEntity
 {
+public:
     Pitcher();
     ~Pitcher() = default;
+    void drawOnGrid(Grid &grid) override;
 };
 
 }
